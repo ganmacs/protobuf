@@ -497,6 +497,18 @@ module BasicTest
         :map_string_enum => {"a" => :A, "b" => :B}
       }
       assert_equal expected_result, m.to_h
+
+      m = MapMessage.new(
+        :map_string_int32 => {"a" => 1, "b" => 2},
+        :map_string_msg => {"a" => TestMessage2.new(:foo => 1),
+                            "b" => TestMessage2.new(:foo => 2)},
+        :map_string_enum => {"b" => :DEFAULT})
+      expected_result = {
+        :map_string_int32 => {"a" => 1, "b" => 2},
+        :map_string_msg => {"a" => {:foo => 1}, "b" => {:foo => 2}},
+        :map_string_enum => {"b" => :DEFAULT}
+      }
+      assert_equal expected_result, m.to_h
     end
 
 
